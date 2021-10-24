@@ -134,8 +134,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -334,8 +334,8 @@ TextureImporter:
         y: 246
         width: 18
         height: 30
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 9
+      pivot: {x: 0.58, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -355,8 +355,8 @@ TextureImporter:
         y: 246
         width: 22
         height: 30
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 9
+      pivot: {x: 0.385, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -376,8 +376,8 @@ TextureImporter:
         y: 246
         width: 17
         height: 22
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 9
+      pivot: {x: 0.56, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -397,8 +397,8 @@ TextureImporter:
         y: 246
         width: 21
         height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 9
+      pivot: {x: 0.31, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -436,11 +436,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 14
-        y: 211
-        width: 32
-        height: 30
-      alignment: 9
-      pivot: {x: 0.85, y: 0}
+        y: 218
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -456,12 +456,12 @@ TextureImporter:
       name: Sonia-Belmont_SPR_12
       rect:
         serializedVersion: 2
-        x: 53
-        y: 211
-        width: 47
-        height: 30
-      alignment: 9
-      pivot: {x: 0.24, y: 0}
+        x: 35
+        y: 227
+        width: 25
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -477,12 +477,12 @@ TextureImporter:
       name: Sonia-Belmont_SPR_13
       rect:
         serializedVersion: 2
-        x: 105
-        y: 210
-        width: 32
-        height: 23
-      alignment: 9
-      pivot: {x: 0.858, y: 0.044}
+        x: 85
+        y: 224
+        width: 22
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -498,12 +498,12 @@ TextureImporter:
       name: Sonia-Belmont_SPR_14
       rect:
         serializedVersion: 2
-        x: 140
-        y: 211
-        width: 46
-        height: 23
-      alignment: 9
-      pivot: {x: 0.206, y: 0}
+        x: 116
+        y: 215
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -519,12 +519,12 @@ TextureImporter:
       name: Sonia-Belmont_SPR_15
       rect:
         serializedVersion: 2
-        x: 18
-        y: 176
-        width: 28
-        height: 30
+        x: 8
+        y: 194
+        width: 13
+        height: 19
       alignment: 9
-      pivot: {x: 0.837, y: 0}
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -540,12 +540,12 @@ TextureImporter:
       name: Sonia-Belmont_SPR_16
       rect:
         serializedVersion: 2
-        x: 53
-        y: 176
-        width: 62
-        height: 30
-      alignment: 9
-      pivot: {x: 0.185, y: 0}
+        x: 26
+        y: 202
+        width: 40
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -561,12 +561,12 @@ TextureImporter:
       name: Sonia-Belmont_SPR_17
       rect:
         serializedVersion: 2
-        x: 128
-        y: 175
-        width: 28
-        height: 23
+        x: 8
+        y: 168
+        width: 13
+        height: 19
       alignment: 9
-      pivot: {x: 0.836, y: 0.04}
+      pivot: {x: 0.4, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -582,12 +582,12 @@ TextureImporter:
       name: Sonia-Belmont_SPR_18
       rect:
         serializedVersion: 2
-        x: 159
-        y: 176
-        width: 61
-        height: 23
-      alignment: 9
-      pivot: {x: 0.158, y: 0}
+        x: 28
+        y: 175
+        width: 39
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -595,90 +595,6 @@ TextureImporter:
       bones: []
       spriteID: 61486e1821653f6c0800000000000000
       internalID: -4110847397370362858
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sonia-Belmont_SPR_19
-      rect:
-        serializedVersion: 2
-        x: 18
-        y: 141
-        width: 28
-        height: 30
-      alignment: 9
-      pivot: {x: 0.835, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f01dde500926109b0800000000000000
-      internalID: -5115699331001888497
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sonia-Belmont_SPR_20
-      rect:
-        serializedVersion: 2
-        x: 54
-        y: 141
-        width: 61
-        height: 30
-      alignment: 9
-      pivot: {x: 0.188, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6ae5e0185cf04d7c0800000000000000
-      internalID: -4047592824151056730
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sonia-Belmont_SPR_21
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 140
-        width: 28
-        height: 23
-      alignment: 9
-      pivot: {x: 0.836, y: 0.04}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 99003a85b1bab5c90800000000000000
-      internalID: -7179957046972579687
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sonia-Belmont_SPR_22
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 141
-        width: 60
-        height: 23
-      alignment: 9
-      pivot: {x: 0.158, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7dc1d196e34643eb0800000000000000
-      internalID: -4741054288500024105
       vertices: []
       indices: 
       edges: []
@@ -733,8 +649,8 @@ TextureImporter:
         y: 101
         width: 14
         height: 22
-      alignment: 9
-      pivot: {x: 0.675, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

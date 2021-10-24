@@ -5,8 +5,11 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : MonoBehaviour
 {
+
     [HideInInspector]
     public ControllerType controller;
+
+    public float weaponState;
 
     [SerializeField] private float h;
     [SerializeField] private float v;
@@ -23,8 +26,8 @@ public class PlayerController : MonoBehaviour
     [Header("Valores Modificables")]
     public int currentHealth = 15;
     public int maxHealth = 15;
-    public float hurtForce;
-    public float hurtForceB;
+    public float hurtForceY;
+    public float hurtForceX;
     [SerializeField] private float moveSpeed = 100f;
     [SerializeField] private float speedBase = 100f;
     [SerializeField] private float jumpForce = 4f;
@@ -50,11 +53,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isGrounded = false;
     [SerializeField] private bool isPlatformed = false;
     [SerializeField] private bool canJump = false;
+    [SerializeField] private bool canMove = true;
     public bool isCrouched = false;
-    public float weaponState;
 
 
     private bool AttackAnim;
+    private bool AirAttackAnim;
+    private bool CrouchAttackAnim;
     private bool HurtAnim;
 
     public Joystick joystick;
@@ -92,6 +97,8 @@ public class PlayerController : MonoBehaviour
         Attack();
 
         AttackAnim = anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack");
+        AirAttackAnim = anim.GetCurrentAnimatorStateInfo(0).IsTag("AirAttack");
+        CrouchAttackAnim = anim.GetCurrentAnimatorStateInfo(0).IsTag("CrouchAttack");
         HurtAnim = anim.GetCurrentAnimatorStateInfo(0).IsTag("Sonia_Hurt");
     }
 
@@ -117,7 +124,11 @@ public class PlayerController : MonoBehaviour
             //Attack
             if (CrossPlatformInputManager.GetButtonDown("Fire1"))
             {
-                isAttack = true;
+                if (Time.time >= nextAttackTime)
+                {
+                    isAttack = true;
+                    nextAttackTime = Time.time + 1f / attackRate;
+                }
             }
         }
         else if (controller == ControllerType.PC)
@@ -134,7 +145,11 @@ public class PlayerController : MonoBehaviour
             //Attack key PC
             if (Input.GetButtonDown("Fire1"))
             {
-                isAttack = true;
+                if (Time.time >= nextAttackTime)
+                {
+                    isAttack = true;
+                    nextAttackTime = Time.time + 1f / attackRate;
+                }
             }
         }
 
@@ -200,19 +215,16 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
-        if (RightKey && !AttackAnim && !HurtAnim)
+        if (RightKey && !AttackAnim && !CrouchAttackAnim && !HurtAnim && canMove)
         {
-
             rb.velocity = new Vector2(moveSpeed * Time.fixedDeltaTime, rb.velocity.y);
         }
-        else if (LeftKey && !AttackAnim && !HurtAnim)
+        else if (LeftKey && !AttackAnim && !CrouchAttackAnim && !HurtAnim && canMove)
         {
-
             rb.velocity = new Vector2(-moveSpeed * Time.fixedDeltaTime, rb.velocity.y);
         }
-        else
+        else if (!RightKey && !LeftKey && canMove)
         {
-
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
     }
@@ -220,8 +232,9 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if (isJump && !AttackAnim)
+        if (isJump && !AttackAnim && canMove)
         {
+            anim.SetTrigger("Jump");
             rb.velocity = new Vector2(rb.velocity.x, 0f);
             rb.AddForce(new Vector2(0, jumpForce * Time.fixedDeltaTime), ForceMode2D.Impulse);
             isJump = false;
@@ -257,41 +270,45 @@ public class PlayerController : MonoBehaviour
 
     private void Attack()
     {
-        if (isAttack && !isJump)
+        if (isAttack && !isJump && isGrounded)
         {
             moveSpeed = 0;
-
-            if (Time.time >= nextAttackTime)
-            {
-                anim.SetTrigger("Attack");
-                nextAttackTime = Time.time + 1f / attackRate;
-            }
-            else
-            {
-                isAttack = false;
-                moveSpeed = speedBase;
-            }
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            anim.SetTrigger("Attack");
+            isAttack = false;
         }
-
+        else if (isAttack && !isGrounded)
+        {
+            anim.SetTrigger("Attack");
+            isAttack = false;
+            StartCoroutine(WaitToGround());
+        }
     }
 
-
+    IEnumerator WaitToGround()
+    {
+        yield return new WaitUntil(() => isGrounded);
+        if (AirAttackAnim)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            canMove = false;
+            yield return new WaitForSeconds(0.15f);
+            canMove = true;
+        }
+    }
 
     private void OnFloor()
     {
         isGrounded = Physics2D.IsTouchingLayers(feetPos, whatIsGround);
         isPlatformed = Physics2D.IsTouchingLayers(feetPos, whatIsPlatform);
-        if (isGrounded)
-            canJump = true;
     }
 
 
     private void Animations()
     {
         anim.SetFloat("VelX", Mathf.Abs(h));
-        anim.SetBool("A_Jump", !canJump);
         anim.SetBool("Crouched", isCrouched);
-        anim.SetFloat("StateWeapon", weaponState);
+        anim.SetBool("Grounded", isGrounded);
 
         if (rb.velocity.y > 0 && !isGrounded)
         {
@@ -301,7 +318,6 @@ public class PlayerController : MonoBehaviour
         {
             feetPos.enabled = true;
         }
-
     }
 
 
@@ -323,7 +339,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     IEnumerator GetInvulnerable()
     {
         Physics2D.IgnoreLayerCollision(12, 14, true);
@@ -333,38 +348,41 @@ public class PlayerController : MonoBehaviour
         Physics2D.IgnoreLayerCollision(12, 14, false);
         c.a = 1f;
         rend.material.color = c;
-
     }
-
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Enemy" && !isGrounded && !isPlatformed && currentHealth > 0 || collision.gameObject.tag == "Boss" && !isGrounded && !isPlatformed && currentHealth > 0)
+        if (collision.gameObject.tag == "Enemy" && currentHealth > 0 || collision.gameObject.tag == "Boss" && currentHealth > 0)
         {
+            canMove = false;
+
             if (collision.gameObject.transform.position.x > transform.position.x)
             {
                 rb.velocity = Vector2.zero;
-                rb.AddForce(new Vector2(rb.velocity.x, hurtForce), ForceMode2D.Impulse);
-                rb.AddForce(new Vector2(-hurtForceB, rb.velocity.y), ForceMode2D.Force);
+                rb.AddForce(new Vector2(-hurtForceX, hurtForceY), ForceMode2D.Impulse);
             }
             else
             {
                 rb.velocity = Vector2.zero;
-                rb.AddForce(new Vector2(rb.velocity.x, hurtForce), ForceMode2D.Impulse);
-                rb.AddForce(new Vector2(hurtForceB, rb.velocity.y), ForceMode2D.Force);
+                rb.AddForce(new Vector2(hurtForceX, hurtForceY), ForceMode2D.Impulse);
             }
+
+            StartCoroutine(RecoverMove());
         }
     }
 
+    IEnumerator RecoverMove()
+    {
+        yield return new WaitForSeconds(0.2f);
+        canMove = true;
+
+    }
     void Die()
     {
         anim.SetBool("IsDead", true);  // die animation
-
-
         rb.velocity = new Vector2(0, rb.velocity.y);
+        canMove = false;
         StartCoroutine("afterDie");
-
     }
 
     IEnumerator afterDie()

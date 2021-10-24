@@ -16,30 +16,30 @@ public class PlatformJumpOff : MonoBehaviour
     {
         if (coll.collider.CompareTag("Player"))
         {
-            if (Input.GetButtonDown("Jump") || CrossPlatformInputManager.GetButtonDown("Jump"))
+            Collider2D colisionPlayer = coll.collider.GetComponent<Collider2D>();
+            bool crouched = coll.gameObject.GetComponent<PlayerController>().isCrouched;
+
+            if (crouched && Input.GetButtonDown("Jump") || CrossPlatformInputManager.GetButtonDown("Jump") && crouched)
             {
                 jumpOff = true;
             }
-            else if (Input.GetButtonUp("Jump") || CrossPlatformInputManager.GetButtonUp("Jump"))
-            {
-                jumpOff = false;
-            }
-
-            bool crouched = coll.gameObject.GetComponent<PlayerController>().isCrouched;
-            Collider2D colisionPlayer = coll.collider.GetComponent<Collider2D>();
 
             if (crouched && jumpOff)
             {
                 StartCoroutine(IgnorarColision(colisionPlayer));
             }
         }
+        else
+        {
+            jumpOff = false;
+        }
     }
 
     IEnumerator IgnorarColision(Collider2D playerCollider)
     {
         Physics2D.IgnoreCollision(playerCollider, this.gameObject.GetComponent<Collider2D>(), true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         Physics2D.IgnoreCollision(playerCollider, this.gameObject.GetComponent<Collider2D>(), false);
-
+        jumpOff = false;
     }
 }

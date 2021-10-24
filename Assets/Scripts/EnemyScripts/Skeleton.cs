@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Skeleton : MonoBehaviour
 {
-
     public int currentHealth;
     public int healthMax = 3;
     public float moveSpeed = 1f;
@@ -30,24 +29,23 @@ public class Skeleton : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        
+
         //play hurt animation
 
         if (currentHealth <= 0)
         {
             isDead = true;
-            GetComponent<RespawnEnemy>().statusDead = true;
             Die();
         }
-                
+
     }
 
 
     void Die()
     {
-        moveSpeed = 0;        
+        moveSpeed = 0;
         animEnemy.SetBool("IsDead", true);  // die animation        
-        GetComponent<BoxCollider2D>().enabled = false;        
+        GetComponent<BoxCollider2D>().enabled = false;
         StartCoroutine("TimerDespawn");
         rb.isKinematic = true;
     }
@@ -55,8 +53,8 @@ public class Skeleton : MonoBehaviour
     IEnumerator TimerDespawn()
     {
         yield return new WaitForSeconds(1.7f);
-        gameObject.SetActive(false);
-        
+        Destroy(this.gameObject);
+
     }
 
     // Update is called once per frame
@@ -67,7 +65,6 @@ public class Skeleton : MonoBehaviour
         if (currentHealth > 0)
         {
             isDead = false;
-            GetComponent<RespawnEnemy>().statusDead = false;
             moveSpeed = 1;
             rb.isKinematic = false;
         }
@@ -85,12 +82,12 @@ public class Skeleton : MonoBehaviour
     }
 
 
-    
 
+    //aplica daño al jugador
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")
-        {            
+        {
             collision.gameObject.GetComponent<PlayerController>().TakeDamage(attackDamage);
         }
     }
