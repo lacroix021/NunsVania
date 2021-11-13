@@ -13,6 +13,7 @@ public enum ControllerType
 
 public class GameManager : MonoBehaviour
 {
+    //para definir controles entre android o PC
     public ControllerType controller;
 
     public GameObject pausePanel;
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
 
     public int numBlood;
     public Image[] playerLife;
+
+    
 
     // Start is called before the first frame update
     void Start()
